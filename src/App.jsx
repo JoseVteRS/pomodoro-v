@@ -61,15 +61,11 @@ function App() {
             {/* <div className="mt-20">
               <SpotifyButton />
             </div> */}
-
-
           </div>
 
 
 
         </div>
-
-
       </main>
     </>
   )
