@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 
-export const useTimer = () => { 
+export const useTimer = () => {
 
     const sessionTime = 25
     const breakTime = 5
@@ -10,38 +10,49 @@ export const useTimer = () => {
     const [minutes, setMinutes] = useState(sessionTime)
     const [seconds, setSeconds] = useState(0)
     const [text, setText] = useState('session')
+    const [play, setPlay] = useState(false)
+    const [pause, setPause] = useState(true)
 
-    
+    const handlePlay = () => {
+        setPlay(true)
+        setPause(false)
+    }
+    const handlePause = () => {
+        setPause(true)
+        setPlay(false)
+        window.localStorage.setItem('pause', JSON.stringify({ minutes, seconds, text }))
+    }
 
     useEffect(() => {
         window.document.title = `${text.toUpperCase()} - ⌛ ${minutes}:${seconds}`
     }, [minutes, seconds, text])
 
     useEffect(() => {
+        if (play) {
+            const interval = setInterval(() => {
+                if (seconds > 0) {
+                    setSeconds(seconds - 1)
+                    // setSession((minutes * 60) + (seconds - 1))
+                } else {
+                    setMinutes(minutes - 1)
+                    setSeconds(59)
+                }
+            }, 1000)
 
-        const interval = setInterval(() => {
-            if (seconds > 0) {
-                setSeconds(seconds - 1)
-                // setSession((minutes * 60) + (seconds - 1))
-            } else {
-                setMinutes(minutes - 1)
-                setSeconds(59)
+            if (minutes === 0 && seconds === 0) {
+                if (text === 'session') {
+                    setText('break')
+                    changeToSession()
+                } else {
+                    setText('session')
+                    changeToBreak()
+                }
+                clearInterval(interval)
             }
-        }, 1000)
-
-        if (minutes === 0 && seconds === 0) {
-            if (text === 'session') {
-                setText('break')
-                changeToSession()
-            } else {
-                setText('session')
-                changeToBreak()
-            }
-            clearInterval(interval)
+            return () => clearInterval(interval)
         }
 
-        return () => clearInterval(interval)
-    }, [minutes, seconds])
+    }, [minutes, seconds, play, pause])
 
     const reset = () => {
         setMinutes(sessionTime)
@@ -64,7 +75,11 @@ export const useTimer = () => {
         minutes,
         seconds,
         text,
-        percent
+        percent,
+        play,
+        pause,
+        handlePlay,
+        handlePause,
     }
 
 

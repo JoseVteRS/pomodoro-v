@@ -2,16 +2,15 @@
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 import { Button } from "./components/Button";
-import { CogIcon, PauseIcon } from "./components/Icons";
+import { CogIcon, PauseIcon, PlayIcon } from "./components/Icons";
 import { PROGRESSBAR_COLORS } from "./config/ciurcular-progressbar-color";
 import { useTimer } from "./hooks/useTimer";
 
 
-const sessionTime = 1
-const breakTime = 1
+
 
 function App() {
-  const { minutes, seconds, text, percent } = useTimer()
+  const { minutes, seconds, text, percent, pause, play, handlePause, handlePlay } = useTimer()
 
   return (
     <>
@@ -45,13 +44,18 @@ function App() {
 
 
             <div className="mt-12">
-              {/* <Button>
-                <PlayIcon className="fill-primary w-12 h-12" />
-              </Button> */}
-              <Button>
-                <PauseIcon className="fill-primary w-12 h-12" />
-              </Button>
-
+              {
+                pause ? (
+                  <Button onClick={handlePlay}>
+                    <PlayIcon className="fill-primary w-12 h-12" />
+                  </Button>
+                )
+                  : (
+                    <Button onClick={handlePause}>
+                      <PauseIcon className="fill-primary w-12 h-12" />
+                    </Button>
+                  )
+              }
             </div>
 
             {/* <div className="mt-20">
