@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
+import { useSettingsContext } from "./useSettingsContext"
+import { useCallback } from "react"
 
 
 export const useTimer = () => {
-
-    const sessionTime = 25
-    const breakTime = 5
-
+    const { settings } = useSettingsContext()
+ 
     // Minutes and seconds
-    const [minutes, setMinutes] = useState(sessionTime)
+    const [minutes, setMinutes] = useState(settings.session)
     const [seconds, setSeconds] = useState(0)
     const [text, setText] = useState('session')
     const [play, setPlay] = useState(false)
@@ -23,6 +23,23 @@ export const useTimer = () => {
         window.localStorage.setItem('pause', JSON.stringify({ minutes, seconds, text }))
     }
 
+    const changeToBreak = useCallback(
+        () => {
+            setMinutes(settings.breakTime)
+            setSeconds(0)
+        },
+        [settings.breakTime],
+    )
+
+
+    const changeToSession = useCallback(
+
+        () => {
+            setMinutes(settings.session)
+            setSeconds(0)
+        }, [settings.session]
+    )
+
     useEffect(() => {
         window.document.title = `${text.toUpperCase()} - ⌛ ${minutes}:${seconds}`
     }, [minutes, seconds, text])
@@ -32,7 +49,6 @@ export const useTimer = () => {
             const interval = setInterval(() => {
                 if (seconds > 0) {
                     setSeconds(seconds - 1)
-                    // setSession((minutes * 60) + (seconds - 1))
                 } else {
                     setMinutes(minutes - 1)
                     setSeconds(59)
@@ -52,27 +68,16 @@ export const useTimer = () => {
             return () => clearInterval(interval)
         }
 
-    }, [minutes, seconds, play, pause])
+    }, [minutes, seconds, play, pause, changeToBreak, changeToSession, text])
 
-    const reset = () => {
-        setMinutes(sessionTime)
-        setSeconds(0)
-    }
 
-    const changeToBreak = () => {
-        setMinutes(breakTime)
-        setSeconds(0)
-    }
 
-    const changeToSession = () => {
-        setMinutes(sessionTime)
-        setSeconds(0)
-    }
 
-    const percent = (((minutes * 60) + seconds) * 100) / (sessionTime * 60)
+    const percent = (((minutes * 60) + seconds) * 100) / (settings.session * 60)
 
     return {
         minutes,
+        setMinutes,
         seconds,
         text,
         percent,
