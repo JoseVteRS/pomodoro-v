@@ -1,13 +1,13 @@
 
+import { useState } from "react";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 import { Button } from "./components/Button";
+import { Drawer } from "./components/Drawer";
 import { CogIcon, PauseIcon, PlayIcon } from "./components/Icons";
 import { PROGRESSBAR_COLORS } from "./config/ciurcular-progressbar-color";
-import { useTimer } from "./hooks/useTimer";
-import { Drawer } from "./components/Drawer";
-import { useState } from "react";
 import { useSettingsContext } from "./hooks/useSettingsContext";
+import { useTimer } from "./hooks/useTimer";
 
 
 
@@ -17,10 +17,7 @@ function App() {
   const { minutes, seconds, text, percent, pause, handlePause, handlePlay, setMinutes } = useTimer()
   const [isOpen, setIsOpen] = useState(false)
 
-  console.log({ minutes, seconds })
-
   const { settings } = useSettingsContext()
-
 
   const toggleDrawer = () => {
     setIsOpen(isOpen => !isOpen)
