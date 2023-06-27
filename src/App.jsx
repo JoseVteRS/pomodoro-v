@@ -51,18 +51,19 @@ function App() {
         </div>
       </Drawer>
 
-      <main className="w-full h-full " >
-        <section className="flex flex-col absolute w-full h-full z-10 p-10 text-white bg-gray-dark">
+      <main className="relative min-h-screen" >
+        <section className=" text-white bg-gray-dark h-screen">
 
-          <nav className="w-full p-3 flex items-center justify-end" >
+          <nav className="sticky top-0 w-full p-3 flex items-center justify-end  z-10"  >
             <ul>
               <li> <Button onClick={toggleDrawer} className="text-gray-light" ><CogIcon /></Button> </li>
             </ul>
           </nav>
-          <div className=" w-11/12 mx-auto py-16 h-full flex items-center justify-center" >
+
+          <div className="w-5/12 mx-auto" >
 
 
-            <div className="w-12/12 mx-auto max-h-screen" >
+            <div className="" >
               <CircularProgressbarWithChildren
                 value={percent}
                 className={`shadow-xl ${text === 'session' ? 'shadow-gray-dark/10' : 'shadow-white/20'} p-4 rounded-full font-bold`}
@@ -72,19 +73,15 @@ function App() {
                   trailColor: PROGRESSBAR_COLORS.secondary,
                   pathTransitionDuration: 1,
                   trailTransitionDuration: 1,
+                  rotation: 0.25,
                 })} >
 
                 <div className="flex flex-col items-center justify-center">
-                  <time className="text-4xl font-bold text-primary " >
+                  <time className="text-[10rem] font-bold text-primary " >
                     {minutes.toString().padStart(2, '0')} : {seconds.toString().padStart(2, '0')}
                   </time>
                   <span className="text-sm uppercase block tracking-[10px] text-gray-light mt-3" >{text}</span>
-
-                </div>
-              </CircularProgressbarWithChildren>
-
-
-              <div className="mt-12 flex items-center justify-center">
+                  <div className="mt-12 flex items-center justify-center">
                 {
                   pause ? (
                     <Button onClick={handlePlay}>
@@ -98,6 +95,11 @@ function App() {
                     )
                 }
               </div>
+                </div>
+              </CircularProgressbarWithChildren>
+
+
+
 
               {/* <div className="mt-20">
                 <SpotifyButton />

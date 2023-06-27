@@ -5,7 +5,7 @@ import { useCallback } from "react"
 
 export const useTimer = () => {
     const { settings } = useSettingsContext()
- 
+
     // Minutes and seconds
     const [minutes, setMinutes] = useState(settings.session)
     const [seconds, setSeconds] = useState(0)
@@ -35,9 +35,12 @@ export const useTimer = () => {
     const changeToSession = useCallback(
 
         () => {
-            setMinutes(settings.session)
-            setSeconds(0)
-        }, [settings.session]
+            if (settings.session === 1)
+                setMinutes(0)
+            else
+                setMinutes(settings.session - 1)
+            setSeconds(seconds)
+        }, [settings.session, seconds]
     )
 
     useEffect(() => {
