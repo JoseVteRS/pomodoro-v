@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useSettingsContext } from "./useSettingsContext"
-import { useCallback } from "react"
 
 
 export const useTimer = () => {
     const { settings } = useSettingsContext()
+    const { breakTime, sessionTime, setBreakTime, setSessionTime } = settings
 
     // Minutes and seconds
-    const [minutes, setMinutes] = useState(settings.session)
+    const [minutes, setMinutes] = useState(sessionTime)
     const [seconds, setSeconds] = useState(0)
     const [text, setText] = useState('session')
     const [play, setPlay] = useState(false)
@@ -25,22 +25,22 @@ export const useTimer = () => {
 
     const changeToBreak = useCallback(
         () => {
-            setMinutes(settings.breakTime)
+            setMinutes(breakTime)
             setSeconds(0)
         },
-        [settings.breakTime],
+        [breakTime],
     )
 
 
     const changeToSession = useCallback(
 
         () => {
-            if (settings.session === 1)
+            if (sessionTime === 1)
                 setMinutes(0)
             else
-                setMinutes(settings.session - 1)
+                setMinutes(sessionTime - 1)
             setSeconds(seconds)
-        }, [settings.session, seconds]
+        }, [sessionTime, seconds]
     )
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export const useTimer = () => {
 
 
 
-    const percent = (((minutes * 60) + seconds) * 100) / (settings.session * 60)
+    const percent = (((minutes * 60) + seconds) * 100) / (sessionTime * 60)
 
     return {
         minutes,

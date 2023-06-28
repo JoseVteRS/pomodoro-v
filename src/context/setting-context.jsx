@@ -1,30 +1,28 @@
-import { useState } from "react";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 
 export const SettingsContext = createContext({
     settings: {
-        session: 25,
+        sessionTime: 25,
         breakTime: 5,
-        setSession: () => { },
+        setSessionTime: () => { },
         setBreakTime: () => { },
     },
 });
 
 
-
 export const SettingProvider = ({ children }) => {
 
-    const [session, setSession] = useState(25)
+    const [sessionTime, setSessionTime] = useState(25)
     const [breakTime, setBreakTime] = useState(5)
 
 
     return (
         <SettingsContext.Provider value={{
             settings: {
-                session,
+                sessionTime,
                 breakTime,
-                setSession,
+                setSessionTime,
                 setBreakTime,
             },
         }}>
