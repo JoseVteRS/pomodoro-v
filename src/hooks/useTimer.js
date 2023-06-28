@@ -33,7 +33,6 @@ export const useTimer = () => {
 
 
     const changeToSession = useCallback(
-
         () => {
             if (sessionTime === 1)
                 setMinutes(0)
@@ -44,7 +43,7 @@ export const useTimer = () => {
     )
 
     useEffect(() => {
-        window.document.title = `${text.toUpperCase()} - ⌛ ${minutes}:${seconds}`
+        window.document.title = `${text.toUpperCase()} - ⌛ ${minutes}:${seconds.toString().padStart(2, '0')}`
     }, [minutes, seconds, text])
 
     useEffect(() => {
@@ -70,7 +69,6 @@ export const useTimer = () => {
             }
             return () => clearInterval(interval)
         }
-
     }, [minutes, seconds, play, pause, changeToBreak, changeToSession, text])
 
 

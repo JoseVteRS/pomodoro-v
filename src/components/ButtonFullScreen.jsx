@@ -18,10 +18,10 @@ export const ButtonFullScreen = () => {
         <button onClick={handleFullScreen} >
             {
                 isFullScreen ? (
-                    <FullScreenExitIcon className="fill-primary w-12 h-12" />
+                    <FullScreenExitIcon className="fill-gray-light w-8 h-12" />
 
                 ) : (
-                    <FullScreenIcon className="fill-primary w-12 h-12" />
+                    <FullScreenIcon className="fill-gray-light w-8 h-8" />
                 )
             }
         </button>
