@@ -4,15 +4,15 @@ import React, { useState } from 'react'
 import { useSettingsContext } from '../../hooks/useSettingsContext'
 import { useTimer } from '../../hooks/useTimer'
 import { Button } from '../Button'
+import { ButtonFullScreen } from '../ButtonFullScreen'
 import { Drawer } from '../Drawer'
-import { FullScreenIcon, PauseIcon, PlayIcon } from '../Icons'
-import { FullScreenExitIcon } from '../Icons/full-screen-exit-icon'
+import { PauseIcon, PlayIcon } from '../Icons'
 
 export const MainPage = () => {
 
     const { minutes, seconds, text, percent, pause, handlePause, handlePlay, setMinutes } = useTimer()
     const [isOpen, setIsOpen] = useState(false)
-    const [isFullScreen, setIsFullScreen] = useState(false)
+ 
 
     const { settings: { sessionTime, breakTime, setBreakTime, setSessionTime } } = useSettingsContext()
 
@@ -29,15 +29,7 @@ export const MainPage = () => {
         setBreakTime(e.target.value)
     }
 
-    const handleFullScreen = () => {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-            setIsFullScreen(false)
-        } else {
-            document.documentElement.requestFullscreen();
-            setIsFullScreen(true)
-        }
-    }
+
 
     return (
         <div className='grid place-content-center'>
@@ -90,17 +82,7 @@ export const MainPage = () => {
                         }
                     </div>
 
-                    <button onClick={handleFullScreen} >
-                        {
-                            isFullScreen ? (
-                                <FullScreenExitIcon className="fill-primary w-12 h-12" />
-
-                            ) : (
-                                <FullScreenIcon className="fill-primary w-12 h-12" />
-                            )
-                        }
-
-                    </button>
+                    <ButtonFullScreen />
 
                 </div>
 
