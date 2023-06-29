@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import { TimerProvider } from './context/TimerContext'
 import './index.css'
-import { SettingProvider } from './context/setting-context.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <SettingProvider>
-      <App />
-  </SettingProvider>,
+  <TimerProvider>
+    <App />
+  </TimerProvider>,
 )

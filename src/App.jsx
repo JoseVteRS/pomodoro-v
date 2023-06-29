@@ -3,7 +3,9 @@ import 'react-circular-progressbar/dist/styles.css';
 import { CogIcon } from './components/Icons';
 import { MainPage } from "./components/Pages/Main";
 
+
 function App() {
+
   return (
     <>
       <main className="bg-mesh-dark" >

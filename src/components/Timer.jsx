@@ -1,16 +1,14 @@
-import { Button } from '../components/Button'
-import { PauseIcon, PlayIcon } from '../components/Icons'
+import { Button } from '../components/Button';
+import { PauseIcon, PlayIcon } from '../components/Icons';
 
 export const Timer = ({
-    minutes,    
+    minutes,
     seconds,
     text,
     pause,
     handlePause,
     handlePlay
 }) => {
-
-
 
     return (
         <>

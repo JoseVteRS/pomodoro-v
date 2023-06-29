@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
-import { useSettingsContext } from "./useSettingsContext"
+import { useTimeContext } from "./useSettingsContext"
 
 
 export const useTimer = () => {
-    const { settings } = useSettingsContext()
+    const { settings } = useTimeContext()
     const { breakTime, sessionTime, setBreakTime, setSessionTime } = settings
 
     // Minutes and seconds
@@ -43,7 +43,7 @@ export const useTimer = () => {
     )
 
     useEffect(() => {
-        window.document.title = `${text.toUpperCase()} - ⌛ ${minutes}:${seconds.toString().padStart(2, '0')}`
+        window.document.title = `${text.toUpperCase()} -  ${minutes}:${seconds.toString().padStart(2, '0')}`
     }, [minutes, seconds, text])
 
     useEffect(() => {
@@ -70,8 +70,6 @@ export const useTimer = () => {
             return () => clearInterval(interval)
         }
     }, [minutes, seconds, play, pause, changeToBreak, changeToSession, text])
-
-
 
 
     const percent = (((minutes * 60) + seconds) * 100) / (sessionTime * 60)
